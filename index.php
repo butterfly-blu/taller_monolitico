@@ -15,22 +15,26 @@ $titulo = "Alquiler de vehiculos ";
     <h1> <?php echo  $titulo; ?></h1>
     <br>
     <div>
-        <a href="operaciones/registrar.php">
-            <p> registrar</p>
+        <a href="operaciones/registrar_vh.php">
+            <p> Registrar Vehiculo</p>
         </a>
     </div>
+
     <div>
         <a href="operaciones/estados_vehi.php">
             <p> estado</p>
         </a>
     </div>
-
-    <div>
-        <a href="prueba _bd.php">
-            <p> db</p>
+     <div>
+        <a href="operaciones/registrar_cl.php">
+            <p> Registro Cliente</p>
         </a>
     </div>
-
+    <div>
+        <a href="operaciones/consulta.php">
+            <p> consulta </p>
+        </a>
+    </div>
 </body>
 
 </html>
