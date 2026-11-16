@@ -1,26 +1,9 @@
 <?php
 ini_set('display_errors', 1);
 require_once __DIR__ . '/../conexion_db.php';
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {$conexDB = conexion();
-    $sql = " SELECT * FROM 'vehiculos'";
-    $result = $conexDB->query($sql);
-    if ($result->num_rows > 0) {
-    while($row = $result->fetch_assoc()){
-        echo "ID: " . $row['id'];
-        echo "Marca: " . $row['marca'];
-        echo "Año: " . $row['anio'];
-        echo "Categoria: " . $row['categoria'];
-         echo "Estado: " . $row['estado'];
-        echo "<br>";
-    }}
-    if ($result) {
-        header('Location: ../index.php');
-    } else {
-        header('Location: ../index.php?error_insert=1');
-        exit;
-    }
-    $conexDB->close();
-}
+
+$conexDB = conexion();
+$result = $conexDB->query("SELECT * FROM vehiculos");
 
 
 ?>
@@ -36,10 +19,39 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {$conexDB = conexion();
 <body>
     <h1> Estado vehiculos</h1>
     <br>
+    
+<?php if ($result->num_rows > 0) { ?>
+        <table border="1" cellpadding="6">
+            <tr>
+                <th>N.</th>
+                <th>Marca</th>
+                <th>Modelo</th>
+                <th>Año</th>
+                <th>Categoría</th>
+                <th>Estado</th>
+            </tr>
+            <?php while ($row = $result->fetch_assoc()) { ?>
+                <tr>
+                    <td><?php echo $row['id']; ?></td>
+                    <td><?php echo ($row['marca']); ?></td>
+                    <td><?php echo ($row['modelo']); ?></td>
+                    <td><?php echo $row['anio']; ?></td>
+                    <td><?php echo ($row['categoria']); ?></td>
+                    <td><?php echo ($row['estado']); ?></td>
+                </tr>
+            <?php } ?>
+        </table>
+    <?php } else { ?>
+        <p>No hay vehículos registrados.</p>
+    <?php } ?>
+
+    <p><a href="../index.php">Volver</a></p>
     <div>
         <a href="../index.php">
             <p> registrar</p>
         </a>
     </div>
+
 </body>
 </html>
+<?php $conexDB->close(); ?>

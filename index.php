@@ -25,6 +25,12 @@ $titulo = "Alquiler de vehiculos ";
         </a>
     </div>
 
+    <div>
+        <a href="prueba _bd.php">
+            <p> db</p>
+        </a>
+    </div>
+
 </body>
 
 </html>

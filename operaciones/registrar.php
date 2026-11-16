@@ -2,11 +2,11 @@
 ini_set('display_errors', 1);
 require_once __DIR__ . '/../conexion_db.php';
 $titulo = "Registrar vehiculo ";
-$marca = " ";
-$modelo = " ";
-$anio = " ";
-$categoria = " ";
-$estado = " ";
+$marca ="";
+$modelo ="";
+$anio ="";
+$categoria ="";
+$estado = "";
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $marca = $_POST['marca'];
@@ -14,9 +14,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $anio = $_POST['anio'];
     $categoria = $_POST['categoria'];
     $estado = $_POST['estado'];
+
     $conexDB = conexion();
-    $sql = "INSERT INTO vehiculos(marca, modelo, anio,categoria, estado) values ('$marca' ,'$modelo','$anio','$categoria' ,'$estado')";
+
+    $sql = "INSERT INTO vehiculos(marca, modelo, anio,categoria, estado) 
+    values ('$marca' ,'$modelo','$anio','$categoria' ,'$estado')";
     $result = $conexDB->query($sql);
+   
     if ($result) {
         header('Location: ../index.php');
     } else {
@@ -69,12 +73,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <option value="alquilado">Alquilado</option>
             <option value="mantenimiento">Mantenimiento</option>
         </select>
-    </form>
+  
     <br>
     <div>
         <button type="submit">Registrar</button>
     </div>
+      </form>
     <div>
+        
         <a href="../index.php">
             <p> volver</p>
         </a>
