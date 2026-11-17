@@ -1,10 +1,27 @@
 <?php
 ini_set('display_errors', 1);
-require_once __DIR__ . '/../conexion_db.php';
+require_once __DIR__ . '/../src/conexion_db.php';
+require_once __DIR__ . '/../src/Reserva.php';
+require_once __DIR__ . '/../src/Vehiculo.php';
 
-$conexDB = conexion();
-$result = $conexDB->query("SELECT * FROM vehiculos");
+$conexDB = (new Conexion())->conectar();
+$objVehiculo = new Vehiculo($conexDB);
+$objReserva = new Reserva($conexDB);
 
+// Si se hace clic en "Devolver vehículo"
+if (isset($_GET['devolver_id'])) {
+    $objReserva->devolverVehiculo((int)$_GET['devolver_id']);
+    header('Location: estados_vehi.php');
+    exit;
+}
+
+// Si se hace clic en "Cancelar reserva"
+if (isset($_GET['cancelar_id'])) {
+    $objReserva->cancelarReserva((int)$_GET['cancelar_id']);
+    header('Location: estados_vehi.php');
+    exit;
+}
+$vehiculos = $objVehiculo->listarTodos();
 
 ?>
 <!DOCTYPE html>
@@ -17,10 +34,10 @@ $result = $conexDB->query("SELECT * FROM vehiculos");
 </head>
 
 <body>
-    <h1> Estado vehiculos</h1>
+    <h1> Estado vehiculos y devoluciones y cancelaciones </h1>
     <br>
     
-<?php if ($result->num_rows > 0) { ?>
+<?php if (count($vehiculos) > 0) { ?>
         <table border="1" cellpadding="6">
             <tr>
                 <th>N.</th>
@@ -29,15 +46,24 @@ $result = $conexDB->query("SELECT * FROM vehiculos");
                 <th>Año</th>
                 <th>Categoría</th>
                 <th>Estado</th>
+                <th>Acciones</th>
             </tr>
-            <?php while ($row = $result->fetch_assoc()) { ?>
+            <?php foreach ($vehiculos as $v) { ?>
                 <tr>
-                    <td><?php echo $row['id']; ?></td>
-                    <td><?php echo ($row['marca']); ?></td>
-                    <td><?php echo ($row['modelo']); ?></td>
-                    <td><?php echo $row['anio']; ?></td>
-                    <td><?php echo ($row['categoria']); ?></td>
-                    <td><?php echo ($row['estado']); ?></td>
+                   <td><?php echo $v['id']; ?></td>
+                    <td><?php echo htmlspecialchars($v['marca']); ?></td>
+                    <td><?php echo htmlspecialchars($v['modelo']); ?></td>
+                    <td><?php echo $v['anio']; ?></td>
+                    <td><?php echo htmlspecialchars($v['categoria']); ?></td>
+                    <td><?php echo $v['estado']; ?></td>
+                    <td>
+                        <?php if ($v['estado'] == 'alquilado') { ?>
+                            <a href="estados_vehi.php?devolver_id=<?php echo $v['id']; ?>">Devolver vehículo</a>
+                       <a href="estados_vehi.php?cancelar_id=<?php echo $v['id']; ?>">Cancelar reserva</a>
+                            <?php } else { ?>
+                            -
+                        <?php } ?>
+                    </td>
                 </tr>
             <?php } ?>
         </table>
@@ -46,12 +72,6 @@ $result = $conexDB->query("SELECT * FROM vehiculos");
     <?php } ?>
 
     <p><a href="../index.php">Volver</a></p>
-    <div>
-        <a href="../index.php">
-            <p> registrar</p>
-        </a>
-    </div>
-
+<?php $conexDB->close(); ?>
 </body>
 </html>
-<?php $conexDB->close(); ?>

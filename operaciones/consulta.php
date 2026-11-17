@@ -1,73 +1,44 @@
 <?php
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
-require_once __DIR__ . '/../conexion_db.php';
+require_once __DIR__ . '/../src/conexion_db.php';
+require_once __DIR__ . '/../src/Reserva.php';
+require_once __DIR__ . '/../src/Cliente.php';
+require_once __DIR__ . '/../src/Vehiculo.php';
 
-$conexDB = conexion();
+$conexDB = (new Conexion())->conectar();
+$objVehiculo = new Vehiculo($conexDB);
+$objCliente = new Cliente($conexDB);
+$objReserva = new Reserva($conexDB);
 
-// Ejecuta una consulta preparada con un solo parámetro y devuelve las filas
-function consultar($conexDB, $sql, $valor = null)
-{
-    $stmt = $conexDB->prepare($sql);
-    if ($valor !== null) {
-        $stmt->bind_param("i", $valor);
-    }
-    $stmt->execute();
-    $resultado = $stmt->get_result();
-
-    $filas = array();
-    while ($fila = $resultado->fetch_assoc()) {
-        $filas[] = $fila;
-    }
-    $stmt->close();
-    return $filas;
-}
-
-// Listas para llenar los select
-$vehiculos = consultar($conexDB, "SELECT id, marca, modelo FROM vehiculos ORDER BY marca");
-$clientes = consultar($conexDB, "SELECT id, nombre FROM clientes ORDER BY nombre");
+$vehiculos = $objVehiculo->listarTodos();
+$clientes = $objCliente->listarTodos();
 
 $titulo = "";
-$filas = array();
+$filas = [];
 $consultado = false;
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $accion = $_POST['accion'];
     $consultado = true;
-
-    if ($accion == 'historial_vehiculo') {
-        $id = (int) $_POST['id_vehiculo'];
+if ($accion == 'historial_vehiculo') {
         $titulo = "Historial del vehículo";
-        $filas = consultar($conexDB,
-           "SELECT r.id AS reserva, c.nombre AS cliente, r.fecha_inicio, r.fecha_fin, r.estado
-             FROM reservas r
-             INNER JOIN clientes c ON c.id = r.cliente_id
-             WHERE r.vehiculo_id = ?
-             ORDER BY r.fecha_inicio DESC", $id);
-
+        $filas = $objReserva->historialPorVehiculo((int)$_POST['id_vehiculo']);
     } elseif ($accion == 'historial_cliente') {
-        $id = (int) $_POST['id_cliente'];
         $titulo = "Historial del cliente";
-        $filas = consultar($conexDB,
-            "SELECT r.id AS reserva, v.marca, v.modelo, r.fecha_inicio, r.fecha_fin, r.estado
-             FROM reservas r
-             INNER JOIN vehiculos v ON v.id = r.vehiculo_id
-             WHERE r.cliente_id = ?
-             ORDER BY r.fecha_inicio DESC", $id);
-
+        $filas = $objReserva->historialPorCliente((int)$_POST['id_cliente']);
     } elseif ($accion == 'disponibilidad_vehiculo') {
-        $id = (int) $_POST['id_vehiculo'];
         $titulo = "Disponibilidad del vehículo";
-        $filas = consultar($conexDB,
-            "SELECT marca, modelo, estado FROM vehiculos WHERE id = ?", $id);
-
+        $v = $objVehiculo->buscarPorId((int)$_POST['id_vehiculo']);
+        if ($v) {
+            $filas = [['Marca' => $v['marca'], 'Modelo' => $v['modelo'], 'Estado' => $v['estado']]];
+        }
     } elseif ($accion == 'vehiculos_disponibles') {
         $titulo = "Vehículos disponibles";
-        $filas = consultar($conexDB,
-            "SELECT id, marca, modelo, anio, categoria
-             FROM vehiculos WHERE estado = 'disponible'");
+        $filas = $objVehiculo->listarDisponibles();
     }
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -133,6 +104,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <?php } ?>
 
     <p><a href="../index.php">Volver</a></p>
+    <?php $conexDB->close(); ?>
 </body>
 </html>
-<?php $conexDB->close(); ?>

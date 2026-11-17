@@ -23,7 +23,16 @@ class Reserva
         $vehiculo = $consulta->fetch_assoc();
         return $vehiculo && $vehiculo['estado'] == 'disponible';
     }
+// Cancelar reserva: marca la reserva activa como 'cancelada' y libera el vehículo
+    public function cancelarReserva($vehiculoId)
+    {
+        $stmt = $this->conexDB->prepare("UPDATE reservas SET estado = 'cancelada' WHERE vehiculo_id = ? AND estado = 'activa'");
+        $stmt->bind_param("i", $vehiculoId);
+        $stmt->execute();
 
+        $vehiculo = new Vehiculo($this->conexDB);
+        $vehiculo->cambiarEstado($vehiculoId, 'disponible');
+    }
     // Registra la reserva. Devuelve "" si todo salió bien, o el mensaje de error
     public function registrar()
     {

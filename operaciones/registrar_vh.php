@@ -1,37 +1,24 @@
 <?php
 ini_set('display_errors', 1);
-require_once __DIR__ . '/../conexion_db.php';
-$titulo = "Registrar vehiculo ";
-$marca ="";
-$modelo ="";
-$anio ="";
-$categoria ="";
-$estado = "";
+require_once __DIR__ . '/../src/conexion_db.php';
+require_once __DIR__ . '/../src/Vehiculo.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $marca = $_POST['marca'];
-    $modelo = $_POST['modelo'];
-    $anio = $_POST['anio'];
-    $categoria = $_POST['categoria'];
-    $estado = $_POST['estado'];
+    $conexDB = (new Conexion())->conectar();
 
-    $conexDB = conexion();
+    $vehiculo = new Vehiculo($conexDB);
+    $vehiculo->marca = $_POST['marca'];
+    $vehiculo->modelo = $_POST['modelo'];
+    $vehiculo->anio = $_POST['anio'];
+    $vehiculo->categoria = $_POST['categoria'];
+    $vehiculo->estado = $_POST['estado'];
 
-    $sql = "INSERT INTO vehiculos(marca, modelo, anio,categoria, estado) 
-    values ('$marca' ,'$modelo','$anio','$categoria' ,'$estado')";
-    $result = $conexDB->query($sql);
-   
-    if ($result) {
-        header('Location: ../index.php');
-    } else {
-        header('Location: ../index.php?error_insert=1');
+    if ($vehiculo->registrar()) {
+        header('Location: ../index.php?ok=1');
         exit;
-    }
-    $conexDB->close();
-}
-
-
+    }}
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -42,29 +29,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </head>
 
 <body>
-    <h1> <?php echo  $titulo; ?></h1>
+    <h1> Registar Vehiculo</h1>
     <br>
     <form method="post">
         <div>
             <label for="marca"> Marca : </label>
-            <input type="text" name="marca" id="marca" value="<?php echo $marca; ?>" required>
+            <input type="text" name="marca" id="marca" required>
         </div>
         <br>
         <div>
             <label for="modelo"> Modelo : </label>
-            <input type="text" name="modelo" id="modelo" value="<?php echo $modelo; ?>" required>
+            <input type="text" name="modelo" id="modelo"  required>
         </div>
         <br>
 
         <div>
             <label for="anio"> Año : </label>
-            <input type="number" name="anio" id="anio" value="<?php echo $anio; ?>" required>
+            <input type="number" name="anio" id="anio" required>
         </div>
         <br>
 
         <div>
             <label for="categoria"> Categoria : </label>
-            <input type="text" name="categoria" id="categoria" value="<?php echo $categoria; ?>" required>
+            <input type="text" name="categoria" id="categoria"  required>
         </div>
         <br>
         <label for="estado">Estado :</label>

@@ -1,26 +1,25 @@
 <?php
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
-require_once __DIR__ . '/../conexion_db.php';
-require_once __DIR__ . '/../Reserva.php';
+require_once __DIR__ . '/../src/conexion_db.php';
+require_once __DIR__ . '/../src/Reserva.php';
+require_once __DIR__ . '/../src/Cliente.php';
+require_once __DIR__ . '/../src/Vehiculo.php';
 
-$conexDB = conexion();
-$vehiculos = $conexDB->query("SELECT id, marca, modelo FROM vehiculos WHERE estado = 'disponible' ORDER BY marca");
-$clientes = $conexDB->query("SELECT id, nombre FROM clientes ORDER BY nombre");
-
+$conexDB = (new Conexion())->conectar();
+$clientes = (new Cliente($conexDB))->listarTodos();
+$vehiculos = (new Vehiculo($conexDB))->listarDisponibles();
 $error = "";
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $reserva = new Reserva(
-        $conexDB,
-        $_POST['cliente_id'],
-        $_POST['vehiculo_id'],
-        $_POST['fecha_inicio'],
-        $_POST['fecha_fin']
-    );
+    $reserva = new Reserva($conexDB);
+    $reserva->cliente_id = $_POST['cliente_id'];
+    $reserva->vehiculo_id = $_POST['vehiculo_id'];
+    $reserva->fecha_inicio = $_POST['fecha_inicio'];
+    $reserva->fecha_fin = $_POST['fecha_fin'];
+    
     $error = $reserva->registrar();
-
-    if ($error == "") {
+      if ($error == "") {
         header('Location: ../index.php');
         exit;
     }
@@ -46,17 +45,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="campo">
                 <label for="cliente_id">Cliente</label>
                 <select name="cliente_id" id="cliente_id" required>
-                    <?php while ($c = $clientes->fetch_assoc()) { ?>
-                        <option value="<?php echo $c['id']; ?>"><?php echo($c['nombre']); ?></option>
+                   <?php foreach ($clientes as $c) { ?>
+                        <option value="<?php echo $c['id']; ?>"><?php echo htmlspecialchars($c['nombre']); ?></option>
                     <?php } ?>
                 </select>
             </div>
 
             <div class="campo">
-                <label for="vehiculo_id">Vehículo</label>
+                <label for="vehiculo_id">Vehículo disponible </label>
                 <select name="vehiculo_id" id="vehiculo_id" required>
-                    <?php while ($v = $vehiculos->fetch_assoc()) { ?>
-                        <option value="<?php echo $v['id']; ?>"><?php echo ($v['marca'] . " " . $v['modelo']); ?></option>
+                    <?php foreach ($vehiculos as $v) { ?>
+                        <option value="<?php echo $v['id']; ?>">
+                            <?php echo htmlspecialchars($v['marca'] . " " . $v['modelo']); ?>
+                        </option>
                     <?php } ?>
                 </select>
             </div>
@@ -77,6 +78,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         <a href="../index.php" class="enlace-volver">Volver</a>
     </main>
+    <?php $conexDB->close(); ?>
 </body>
 </html>
-<?php $conexDB->close(); ?>
