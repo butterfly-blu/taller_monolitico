@@ -35,6 +35,11 @@ $titulo = "Alquiler de vehiculos ";
             <p> consulta </p>
         </a>
     </div>
+    <div>
+        <a href="operaciones/reserva.php">
+            <p> Registrar reserva </p>
+        </a>
+    </div>
 </body>
 
 </html>
