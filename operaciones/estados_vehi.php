@@ -31,14 +31,17 @@ $vehiculos = $objVehiculo->listarTodos();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Estado vehiculos </title>
+    <link rel="stylesheet" href="../css/estilos.css">
 </head>
 
 <body>
+    <main class="contenedor contenedor-ancho">
     <h1> Estado vehiculos y devoluciones y cancelaciones </h1>
     <br>
     
-<?php if (count($vehiculos) > 0) { ?>
-        <table border="1" cellpadding="6">
+
+            <?php if (count($vehiculos) > 0) { ?>
+        <table class="tabla">
             <tr>
                 <th>N.</th>
                 <th>Marca</th>
@@ -70,8 +73,9 @@ $vehiculos = $objVehiculo->listarTodos();
     <?php } else { ?>
         <p>No hay vehículos registrados.</p>
     <?php } ?>
-
-    <p><a href="../index.php">Volver</a></p>
-<?php $conexDB->close(); ?>
+<br>
+        <a href="../index.php" class="enlace-volver">Volver</a>
+    </main>
+        <?php $conexDB->close(); ?>
 </body>
 </html>

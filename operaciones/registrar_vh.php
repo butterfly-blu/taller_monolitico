@@ -26,44 +26,51 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registrar vehiculo</title>
+    <link rel="stylesheet" href="../css/estilos.css">
 </head>
 
 <body>
+    <main class="contenedor">
     <h1> Registar Vehiculo</h1>
     <br>
-    <form method="post">
-        <div>
+    <form method="post" class="formulario">
+        <div class="fechas">
+            <div class="campo">
             <label for="marca"> Marca : </label>
             <input type="text" name="marca" id="marca" required>
         </div>
         <br>
-        <div>
+        <div class="campo">
             <label for="modelo"> Modelo : </label>
             <input type="text" name="modelo" id="modelo"  required>
         </div>
+         </div>
         <br>
 
-        <div>
+             <div class="fechas">
+            <div class="campo">
             <label for="anio"> Año : </label>
             <input type="number" name="anio" id="anio" required>
         </div>
         <br>
 
-        <div>
+       <div class="campo">
             <label for="categoria"> Categoria : </label>
             <input type="text" name="categoria" id="categoria"  required>
         </div>
+        </div>
         <br>
+        <div class="campo">
         <label for="estado">Estado :</label>
         <select name="estado" id="estado">
             <option value="disponible">Disponible</option>
             <option value="alquilado">Alquilado</option>
             <option value="mantenimiento">Mantenimiento</option>
         </select>
-  
+        </div>
     <br>
     <div>
-        <button type="submit">Registrar</button>
+        <button type="submit" class="boton">Registrar</button>
     </div>
       </form>
     <div>

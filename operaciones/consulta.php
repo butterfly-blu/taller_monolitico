@@ -46,12 +46,15 @@ if ($accion == 'historial_vehiculo') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Consultas</title>
+    <link rel="stylesheet" href="../css/estilos.css">
 </head>
 <body>
+    <main class="contenedor contenedor-ancho">
     <h1>Consultas</h1>
 
+<div class="seccion-consulta">
     <h3>Historial de un vehículo</h3>
-    <form method="post">
+    <form method="post" class="fila-consulta">
         <select name="id_vehiculo" required>
             <?php foreach ($vehiculos as $v) { ?>
                 <option value="<?php echo $v['id']; ?>">
@@ -62,9 +65,11 @@ if ($accion == 'historial_vehiculo') {
         <button type="submit" name="accion" value="historial_vehiculo">Ver historial</button>
         <button type="submit" name="accion" value="disponibilidad_vehiculo">Ver disponibilidad</button>
     </form>
+</div>
 
+<div class="seccion-consulta">
     <h3>Historial de un cliente</h3>
-    <form method="post">
+    <form method="post" class="fila-consulta">
         <select name="id_cliente" required>
             <?php foreach ($clientes as $c) { ?>
                 <option value="<?php echo $c['id']; ?>">
@@ -74,11 +79,14 @@ if ($accion == 'historial_vehiculo') {
         </select>
         <button type="submit" name="accion" value="historial_cliente">Ver historial</button>
     </form>
+</div>
 
+<div class="seccion-consulta">
     <h3>Vehículos disponibles</h3>
-    <form method="post">
+    <form method="post" class="fila-consulta">
         <button type="submit" name="accion" value="vehiculos_disponibles">Ver todos los disponibles</button>
     </form>
+</div>
 
     <?php if ($consultado) { ?>
         <hr>
@@ -86,7 +94,7 @@ if ($accion == 'historial_vehiculo') {
         <?php if (count($filas) == 0) { ?>
             <p>No se encontraron resultados.</p>
         <?php } else { ?>
-            <table border="1" cellpadding="6">
+            <table class="tabla">
                 <tr>
                     <?php foreach (array_keys($filas[0]) as $columna) { ?>
                         <th><?php echo htmlspecialchars($columna); ?></th>

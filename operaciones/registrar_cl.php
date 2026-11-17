@@ -25,44 +25,45 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> Registro clientes </title>
+    <link rel="stylesheet" href="../css/estilos.css">
 </head>
 
 <body>
     <h1> Registro clientes </h1>
     <br>
-    <form method="post">
-        <div>
+    <form method="post" class="formulario">
+        <div class="campo">
             <label for="nombre">Nombre : </label>
             <input type="text" name="nombre" id="nombre"  required>
         </div>
         <br>
-        <div>
+        <div class="fechas">
+            <div class="campo">
             <label for="telefono">Telefono: </label>
             <input type="number" name="telefono" id="telefono" required>
         </div>
         <br>
-
-        <div>
+        <div class="campo">
             <label for="correo"> Correo : </label>
             <input type="email" name="correo" id="correo" required>
         </div>
+        </div>
         <br>
-
-        <div>
+        <div class="fechas">
+            <div class="campo">
             <label for="numero_licencia"> Numero de licencia : </label>
             <input type="number" name="numero_licencia" id="numero_licencia"  required>
         </div>
     <br>
     <div>
-        <button type="submit">Registrar</button>
+        <button type="submit" class="boton">Registrar</button>
     </div>
       </form>
-    <div>
-        
-        <a href="../index.php">
-            <p> volver</p>
-        </a>
-    </div>
+      <br>
+      <div>
+        <a href="../index.php" class="enlace-volver">Volver</a>
+      </div>
+</main>
 </body>
 
 </html>
