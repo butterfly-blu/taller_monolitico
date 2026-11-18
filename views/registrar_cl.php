@@ -29,6 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </head>
 
 <body>
+    <main class="contenedor">
     <h1> Registro clientes </h1>
     <br>
     <form method="post" class="formulario">
@@ -40,19 +41,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div class="fechas">
             <div class="campo">
             <label for="telefono">Telefono: </label>
-            <input type="number" name="telefono" id="telefono" required>
+            <input type="tel" name="telefono" id="telefono" required>
+        </div>
         </div>
         <br>
         <div class="campo">
             <label for="correo"> Correo : </label>
             <input type="email" name="correo" id="correo" required>
         </div>
-        </div>
         <br>
-        <div class="fechas">
             <div class="campo">
             <label for="numero_licencia"> Numero de licencia : </label>
-            <input type="number" name="numero_licencia" id="numero_licencia"  required>
+            <input type="text" name="numero_licencia" id="numero_licencia"  required>
         </div>
     <br>
     <div>

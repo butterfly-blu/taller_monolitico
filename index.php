@@ -15,17 +15,17 @@ $mensaje = isset($_GET['ok']) ? "Operación realizada correctamente." : "";
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestor de Alquiler de Vehículos</title>
     <link rel="stylesheet" href="css/estilos.css">
+  
 </head>
 <body> 
 <header class="navbar">
-        <a href="index.php" class="navbar-marca">Alquiler de Vehículos</a>
         <nav class="navbar-links">
-            <a href="index.php">Catálogo</a>
-            <a href="operaciones/registrar_vh.php">Registrar vehículo</a>
-            <a href="operaciones/registrar_cl.php">Registrar cliente</a>
-            <a href="operaciones/reserva.php">Nueva reserva</a>
-            <a href="operaciones/estados_vehi.php">Flota y devoluciones</a>
-            <a href="operaciones/consulta.php">Consultas</a>
+            <a href="index.php" class="navbar-marca">Alquiler de Vehículos</a>
+            <a href="views/registrar_vh.php">Registrar vehículo</a>
+            <a href="views/registrar_cl.php">Registrar cliente</a>
+            <a href="views/estados_vehi.php">Vehiculos y devoluciones</a>
+            <a href="views/consulta.php">Consultas</a>
+            <a href="views/reserva.php" class="navbar-destacado">Nueva reserva</a>
         </nav>
     </header>
 
@@ -40,7 +40,7 @@ $mensaje = isset($_GET['ok']) ? "Operación realizada correctamente." : "";
             <div class="contenedor" style="text-align: center;">
                 <p>Aún no hay vehículos registrados.</p>
                 <br>
-                <a href="operaciones/registrar_vh.php" class="boton">Registrar primer vehículo</a>
+                <a href="views/registrar_vh.php" class="boton">Registrar primer vehículo</a>
             </div>
         <?php } else { ?>
             <section class="grid-vehiculos">
@@ -75,7 +75,7 @@ if ($categoria == 'camioneta' || $categoria == 'suv') {
                             </ul>
 
                             <?php if ($v['estado'] == 'disponible') { ?>
-                                <a href="operaciones/reserva.php" class="boton">Reservar</a>
+                                <a href="views/reserva.php" class="boton">Reservar</a>
                             <?php } else { ?>
                                 <span class="boton boton-deshabilitado">No disponible</span>
                             <?php } ?>
@@ -88,4 +88,7 @@ if ($categoria == 'camioneta' || $categoria == 'suv') {
 
 <?php $conexDB->close();?>
 </body>
+<footer class="footer">
+    <p class="footer-titulo"> TALLER MONOLITICO - PROGRAMACION AVANZADA</p>
+</footer>
 </html>

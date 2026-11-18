@@ -1,16 +1,19 @@
-<?php 
+<?php
 require_once __DIR__ . '/Vehiculo.php';
 
-class Reserva{
+class Reserva
+{
     private $conexDB;
     public $cliente_id;
     public $vehiculo_id;
     public $fecha_inicio;
     public $fecha_fin;
+
     public function __construct($conexDB)
     {
         $this->conexDB = $conexDB;
     }
+
     public function registrar()
     {
         if ($this->fecha_fin < $this->fecha_inicio) {
@@ -22,7 +25,7 @@ class Reserva{
             "INSERT INTO reservas (cliente_id, vehiculo_id, fecha_inicio, fecha_fin, estado) VALUES (?, ?, ?, ?, 'activa')"
         );
         $stmt->bind_param("iiss", $this->cliente_id, $this->vehiculo_id, $this->fecha_inicio, $this->fecha_fin);
-        
+
         if (!$stmt->execute()) {
             return "Error al registrar la reserva.";
         }
@@ -31,12 +34,24 @@ class Reserva{
         $vehiculo = new Vehiculo($this->conexDB);
         $vehiculo->cambiarEstado($this->vehiculo_id, 'alquilado');
 
-        return ""; // Todo salió bien
+        return "";
     }
+
     // Devolver vehículo: libera el auto y finaliza su reserva activa
     public function devolverVehiculo($vehiculoId)
     {
         $stmt = $this->conexDB->prepare("UPDATE reservas SET estado = 'completada' WHERE vehiculo_id = ? AND estado = 'activa'");
+        $stmt->bind_param("i", $vehiculoId);
+        $stmt->execute();
+
+        $vehiculo = new Vehiculo($this->conexDB);
+        $vehiculo->cambiarEstado($vehiculoId, 'disponible');
+    }
+
+    // Cancelar reserva: marca la reserva activa como 'cancelada' y libera el vehículo
+    public function cancelarReserva($vehiculoId)
+    {
+        $stmt = $this->conexDB->prepare("UPDATE reservas SET estado = 'cancelada' WHERE vehiculo_id = ? AND estado = 'activa'");
         $stmt->bind_param("i", $vehiculoId);
         $stmt->execute();
 
@@ -70,4 +85,3 @@ class Reserva{
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
 }
-?>

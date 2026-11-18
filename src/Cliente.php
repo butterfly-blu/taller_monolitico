@@ -1,5 +1,6 @@
 <?php
-class Cliente {
+class Cliente
+{
     private $conexDB;
     public $nombre;
     public $telefono;
@@ -7,9 +8,9 @@ class Cliente {
     public $numero_licencia;
     public function __construct($conexDB)
     {
-    $this->conexDB = $conexDB;
+        $this->conexDB = $conexDB;
     }
-public function registrar()
+    public function registrar()
     {
         $stmt = $this->conexDB->prepare(
             "INSERT INTO clientes (nombre, telefono, correo, numero_licencia) VALUES (?, ?, ?, ?)"
@@ -24,4 +25,3 @@ public function registrar()
         return $res->fetch_all(MYSQLI_ASSOC);
     }
 }
-?>

@@ -72,12 +72,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <div>
         <button type="submit" class="boton">Registrar</button>
     </div>
+    
       </form>
     <div>
-        
-        <a href="../index.php">
-            <p> volver</p>
-        </a>
+          <a href="../index.php" class="enlace-volver">Volver</a>
+
     </div>
 </body>
 
