@@ -1,22 +1,6 @@
 <?php
-ini_set('display_errors', 1);
-require_once __DIR__ . '/../src/conexion_db.php';
-require_once __DIR__ . '/../src/Cliente.php';
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $conexDB = (new Conexion())->conectar();
-
-   $cliente = new Cliente($conexDB);
-   $cliente->nombre = $_POST['nombre'];
-   $cliente->telefono = $_POST['telefono'];
-   $cliente->correo = $_POST['correo'];
-   $cliente->numero_licencia = $_POST['numero_licencia'];
-
-    if ($cliente->registrar()) {
-        header('Location: ../index.php?ok=1');
-        exit;
-    }
-}
+$base = "";
+$public = "../public/";
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -24,46 +8,43 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Registro clientes </title>
-    <link rel="stylesheet" href="../css/estilos.css">
+    <title>Registrar cliente</title>
+    <link rel="stylesheet" href="<?php echo $public; ?>css/estilos.css">
 </head>
 
 <body>
+    <?php include __DIR__ . "/partials/menu.php"; ?>
     <main class="contenedor">
-    <h1> Registro clientes </h1>
-    <br>
-    <form method="post" class="formulario">
-        <div class="campo">
-            <label for="nombre">Nombre : </label>
-            <input type="text" name="nombre" id="nombre"  required>
-        </div>
-        <br>
-        <div class="fechas">
+        <h1>Registrar cliente</h1>
+
+        <form action="actions/registrar_cliente.php" method="post" class="formulario">
             <div class="campo">
-            <label for="telefono">Telefono: </label>
-            <input type="tel" name="telefono" id="telefono" required>
-        </div>
-        </div>
-        <br>
-        <div class="campo">
-            <label for="correo"> Correo : </label>
-            <input type="email" name="correo" id="correo" required>
-        </div>
-        <br>
+                <label for="nombre">Nombre</label>
+                <input type="text" name="nombre" id="nombre" required>
+            </div>
+
+            <div class="fila-doble">
+                <div class="campo">
+                    <label for="telefono">Teléfono</label>
+                    <input type="tel" name="telefono" id="telefono" required>
+                </div>
+                <div class="campo">
+                    <label for="numero_licencia">Número de licencia</label>
+                    <input type="text" name="numero_licencia" id="numero_licencia" required>
+                </div>
+            </div>
+
             <div class="campo">
-            <label for="numero_licencia"> Numero de licencia : </label>
-            <input type="text" name="numero_licencia" id="numero_licencia"  required>
-        </div>
-    <br>
-    <div>
-        <button type="submit" class="boton">Registrar</button>
-    </div>
-      </form>
-      <br>
-      <div>
-        <a href="../index.php" class="enlace-volver">Volver</a>
-      </div>
-</main>
+                <label for="correo">Correo</label>
+                <input type="email" name="correo" id="correo" required>
+            </div>
+
+            <button type="submit" class="boton">Guardar</button>
+        </form>
+
+        <a class="enlace-volver" href="vehiculos.php">Volver</a>
+    </main>
+    <?php include __DIR__ . "/partials/footer.php"; ?>
 </body>
 
 </html>

@@ -277,6 +277,14 @@ select:focus {
     color: #666;
     cursor: not-allowed;
 }
+.boton-secundario {
+    background: #25103b;
+    box-shadow: 0 3px 8px rgba(37, 16, 59, 0.35);
+}
+
+.boton-secundario:hover {
+    background: #d2b48c;
+}
 
 /* --- TABLAS Y MENSAJES --- */
 .tabla {
@@ -320,6 +328,11 @@ select:focus {
     margin-bottom: 16px;
 }
 
+.mensaje-aviso {
+    background: #fff4d6;
+    color: #7a5a00;
+    border-color: #f0ad4e;
+}
 
 .contenedor .enlace-volver {
     color: #100d40;
@@ -376,14 +389,7 @@ select:focus {
     min-width: 200px;
 }
 
-.boton-secundario {
-    background: #25103b;
-    box-shadow: 0 3px 8px rgba(37, 16, 59, 0.35);
-}
 
-.boton-secundario:hover {
-    background: #d2b48c;
-}
 
 /* --- ESTILOS PARA GESTIÓN DE LOS VEHICULOS (estados_vehi.php) --- */
 .caja-edicion {
