@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 namespace app\controllers\reservations;
 
 interface reservationsControllerInterface
@@ -9,5 +10,3 @@ interface reservationsControllerInterface
     public function get_history_by_vehicle(int $vehicle_id): array;
     public function get_history_by_customer(int $customer_id): array;
 }
-
-?>

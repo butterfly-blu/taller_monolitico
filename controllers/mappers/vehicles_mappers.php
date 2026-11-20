@@ -3,7 +3,7 @@ namespace app\controllers\mappers;
 
 use app\models\entities\Vehicle;
 
-class VehiclesControlleMappers
+class VehiclesControllerMappers
 {
     public static function to_entity(array $request) : Vehicle 
      {
@@ -17,4 +17,4 @@ class VehiclesControlleMappers
         );
     }
 }
-?>
+

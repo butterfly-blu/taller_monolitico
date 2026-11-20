@@ -12,4 +12,3 @@ interface ReservationsRepositoryInterface
     public function find_active_by_vehicle(int $vehicle_id): Reservation|null;
     public function update_reservation_status(int $id, string $status): bool;
 }
-?>

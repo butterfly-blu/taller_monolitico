@@ -70,4 +70,3 @@ class ReservationsRepository implements ReservationsRepositoryInterface
         return $reservations;
     }
 }
-?>

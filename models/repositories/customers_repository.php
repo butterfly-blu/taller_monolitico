@@ -34,4 +34,3 @@ class CustomersRepository implements CustomersRepositoryInterface
         return $this->rental_db->exc_query($sql);
     }
 }
-?>

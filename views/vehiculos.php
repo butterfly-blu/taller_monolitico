@@ -20,8 +20,6 @@ $public = "../public/";
 $controller = ControllersConfig::get_vehicles_controller();
 $list = $controller->get_vehicles();
 
-// La foto de cada carro está en public/img/vehiculos/ y se llama como su id (1.jpg, 2.png...)
-$extensions = ["jpg", "jpeg", "png", "webp"];
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -48,22 +46,18 @@ $extensions = ["jpg", "jpeg", "png", "webp"];
                     $name = $item->get_brand() . " " . $item->get_model();
                     $status = $item->get_status();
 
-                    $image = "";
-                    foreach ($extensions as $ext) {
-                        if (file_exists(__DIR__ . "/../public/img/vehiculos/" . $id . "." . $ext)) {
-                            $image = $public . "img/vehiculos/" . $id . "." . $ext;
-                            break;
-                        }
+                    // La foto depende de la categoría del carro
+                    $category = strtolower(trim($item->get_category()));
+                    if ($category == "camioneta" || $category == "suv") {
+                        $image = $public . "img/captur.jpeg";
+                    } elseif (str_contains($category, "deportivo")) {
+                        $image = $public . "img/bmws3.jpeg";
+                    } else {
+                        $image = $public . "img/default.jpg";
                     }
                 ?>
                     <article class="tarjeta-auto">
-                        <?php if ($image != "") { ?>
-                            <img src="<?php echo $image; ?>" alt="<?php echo htmlspecialchars($name); ?>">
-                        <?php } else { ?>
-                            <div class="tarjeta-sin-imagen">
-                                <?php echo htmlspecialchars(mb_strtoupper(mb_substr($item->get_brand(), 0, 1))); ?>
-                            </div>
-                        <?php } ?>
+                        <img src="<?php echo $image; ?>" alt="Foto de <?php echo htmlspecialchars($name); ?>">
 
                         <div class="tarjeta-cuerpo">
                             <div class="tarjeta-header">
@@ -87,7 +81,7 @@ $extensions = ["jpg", "jpeg", "png", "webp"];
                             </details>
 
                             <?php if ($status == "disponible") { ?>
-                                <a class="boton" href="formulario_reserva.php?vehicle_id=<?php echo $id; ?>">Reservar</a>
+                                <a class="boton" href="reserva.php?vehicle_id=<?php echo $id; ?>">Reservar</a>
                             <?php } else { ?>
                                 <span class="boton boton-deshabilitado">No disponible</span>
                             <?php } ?>

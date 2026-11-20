@@ -1,6 +1,6 @@
 <?php 
 namespace app\controllers\config;
-use app\controllers\vehiculos\VehiculosController;
+use app\controllers\vehicles\VehiclesController;
 use app\controllers\vehicles\VehiclesControllerInterface;
 use app\controllers\customers\CustomersController;
 use app\controllers\customers\CustomersControllerInterface;
@@ -29,5 +29,3 @@ class ControllersConfig
     }
 }
 
-
-?>

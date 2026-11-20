@@ -17,7 +17,7 @@ class ReservationsController implements ReservationsControllerInterface
         VehiclesRepositoryInterface $vehicles_model
     ) {
         $this->Reservations_model = $Reservations_model;
-        $this->Vehicles_model = $vehicles_model;
+        $this->vehicles_model = $vehicles_model;
     }
 
     // Crea la reserva y deja el vehícle como alquilado
@@ -36,16 +36,16 @@ class ReservationsController implements ReservationsControllerInterface
         }
 
         // Se comprueba otra vez que el vehícle siga disponible
-        $vehicle = $this->Vehicles_model->find_vehicle_by_id($reservation->get_vehicle_id());
+        $vehicle = $this->vehicles_model->find_vehicle_by_id($reservation->get_vehicle_id());
         if (empty($vehicle) || $vehicle->get_status() != "disponible") {
-            throw new Exception("El vehícle no se encuentra disponible.", 4);
+            throw new Exception("El vehículo no se encuentra disponible.", 4);
         }
 
         $saved = $this->Reservations_model->save_new_reservation($reservation);
         if (!$saved) {
             return false;
         }
-        return $this->Vehicles_model->update_vehicle_status($vehicle->get_id(), "alquilado");
+        return $this->vehicles_model->update_vehicle_status($vehicle->get_id(), "alquilado");
     }
 
     // Devolver: la reserva activa pasa a completada y el vehícle queda disponible
@@ -58,7 +58,7 @@ class ReservationsController implements ReservationsControllerInterface
                 return false;
             }
         }
-        return $this->Vehicles_model->update_vehicle_status($vehicle_id, "disponible");
+        return $this->vehicles_model->update_vehicle_status($vehicle_id, "disponible");
     }
 
     // Cancelar: la reserva activa pasa a cancelada y el vehícle queda disponible
@@ -72,7 +72,7 @@ class ReservationsController implements ReservationsControllerInterface
         if (!$updated) {
             return false;
         }
-        return $this->Vehicles_model->update_vehicle_status($vehicle_id, "disponible");
+        return $this->vehicles_model->update_vehicle_status($vehicle_id, "disponible");
     }
 
     public function get_history_by_vehicle(int $vehicle_id): array

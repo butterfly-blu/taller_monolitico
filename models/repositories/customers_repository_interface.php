@@ -9,4 +9,3 @@ interface CustomersRepositoryInterface
     public function get_customers_all(): array;
     public function save_new_customer(Customer $customer): bool;
 }
-?>

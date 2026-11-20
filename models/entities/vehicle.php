@@ -52,4 +52,3 @@ class Vehicle
         return $this->status;
     }
 }
-?>

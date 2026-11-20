@@ -45,4 +45,3 @@ class Customer
         return $this->license_number;
     }
 }
-?>

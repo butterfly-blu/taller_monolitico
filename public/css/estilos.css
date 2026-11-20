@@ -7,9 +7,8 @@
 }
 
 body {
-    font-family: 'Montserrat' Arial, sans-serif;
+    font-family: 'Montserrat', Arial, sans-serif;
     background: linear-gradient(135deg, #002147 0%, #d2b48c 100%);
-    ;
     background-attachment: fixed;
     /* el degradado no se corta al hacer scroll */
     color: #2b2b2b;
@@ -21,19 +20,20 @@ body {
 
 /* --- MENÚ SUPERIOR (Flexbox) --- */
 .navbar {
-    width: 96%;
-    max-width: 1400px;
+    width: calc(100% - 40px);
+    max-width: 1200px;
     margin: 16px auto;
+    padding: 10px 14px;
     background: #dbddc5;
-    padding: 14px 24px;
-    border-radius: 79px;
+    border-radius: 999px;
     display: flex;
+    flex-wrap: nowrap;
     justify-content: space-between;
     align-items: center;
-    flex-wrap: wrap;
-    gap: 50px;
+    gap: 16px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
     position: sticky;
-    top: 12;
+    top: 12px;
     z-index: 10;
 }
 
@@ -44,7 +44,7 @@ body {
     color: #252422da;
     font-weight: 700;
     font-size: 1.2rem;
-    margin-right: 250px;
+    margin-right: auto;
 }
 
 .navbar-links {
@@ -82,10 +82,10 @@ body {
 
 /* --- CONTENEDORES PRINCIPALES --- */
 .contenedor-catalogo {
-    width: 96%;
+    width: 100%;
     max-width: 1300px;
     margin: 48px auto;
-
+    padding: 0 24px;
 }
 
 .titulo-principal {
@@ -115,8 +115,9 @@ body {
 /* --- GALERÍA DE VEHÍCULOS EN INDEX (CSS Grid) --- */
 .grid-vehiculos {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
     gap: 32px;
+    width: 100%;
 }
 
 .tarjeta-auto {
@@ -218,7 +219,8 @@ body {
     gap: 6px;
 }
 
-.fechas {
+.fechas,
+.fila-doble {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 16px;
@@ -277,6 +279,7 @@ select:focus {
     color: #666;
     cursor: not-allowed;
 }
+
 .boton-secundario {
     background: #25103b;
     box-shadow: 0 3px 8px rgba(37, 16, 59, 0.35);
@@ -432,7 +435,7 @@ select:focus {
 
 .footer {
     margin-top: auto;
-    background: #25103b;
+    background: #16265f;
     color: #c9b6f2;
     text-align: center;
     padding: 28px 20px;

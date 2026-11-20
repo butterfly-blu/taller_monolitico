@@ -12,4 +12,4 @@ interface VehiclesRepositoryInterface
     public function save_new_vehicle(Vehicle $vehicle): bool;
     public function update_vehicle_status(int $id, string $status): bool;
 }
-?>
+

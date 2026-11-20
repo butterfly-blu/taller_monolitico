@@ -53,5 +53,3 @@ class RentalDB implements RentalDBInterface
         }
     }
 }
-
-?>

@@ -64,4 +64,3 @@ class VehiclesRepository implements VehiclesRepositoryInterface
         return $vehicles;
     }
 }
-?>

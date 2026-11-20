@@ -1,4 +1,5 @@
 <?php
+
 namespace app\controllers\customers;
 
 use app\controllers\mappers\CustomersControllerMappers;
@@ -33,4 +34,3 @@ class CustomersController implements CustomersControllerInterface
         return $this->customers_model->save_new_customer($customer);
     }
 }
-?>

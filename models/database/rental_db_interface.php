@@ -8,4 +8,3 @@ interface RentalDBInterface
     public function exc_query($sql): bool;
 }
 
-?>

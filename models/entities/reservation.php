@@ -67,4 +67,3 @@ class Reservation
         return $this->vehicle_name;
     }
 }
-?>
