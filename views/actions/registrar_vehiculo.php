@@ -17,7 +17,7 @@ use app\controllers\config\ControllersConfig;
 $base = "../";
 $public = "../../public/";
 $title = "Registrar vehículo";
-$back_link = "../registrar_vehi.php";
+$back_link = "../registrar_vh.php";
 $back_text = "Registrar otro vehículo";
 $success = false;
 $message = "";
